@@ -15,21 +15,21 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location]);
-
   const navLinks = [
     { to: "/", label: "Beranda" },
     { to: "/about", label: "Penyakit" },
-    { to: "/machinelearning", label: "Machine Learning" },
     { to: "/predict", label: "Prediksi" },
   ];
 
   return (
     <nav className={`header ${scrolled ? "header-scrolled" : ""}`}>
       <div className="header-container">
-        <Link to="/" className="header-logo" id="logo-link">
+        <Link
+          to="/"
+          className="header-logo"
+          id="logo-link"
+          onClick={() => setMenuOpen(false)}
+        >
           <div className="header-logo-icon">
             <FaLeaf />
           </div>
@@ -45,11 +45,17 @@ export function Header() {
                 location.pathname === link.to ? "header-link-active" : ""
               }`}
               id={`nav-${link.label.toLowerCase().replace(/\s/g, "-")}`}
+              onClick={() => setMenuOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <Link to="/predict" className="btn btn-primary header-cta" id="nav-cta">
+          <Link
+            to="/predict"
+            className="btn btn-primary header-cta"
+            id="nav-cta"
+            onClick={() => setMenuOpen(false)}
+          >
             Coba Sekarang
           </Link>
         </div>

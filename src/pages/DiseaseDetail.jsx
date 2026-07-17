@@ -8,7 +8,6 @@ import {
   FaExclamationTriangle,
   FaCheckCircle,
   FaFlask,
-  FaBug,
 } from "react-icons/fa";
 import "./DiseaseDetail.css";
 
@@ -40,7 +39,8 @@ const diseases = [
     ],
     treatment:
       "Tidak ada pengobatan kimiawi yang efektif. Fokus pada pencegahan melalui penggunaan material tanam bersih, eradikasi tanaman terinfeksi, dan aplikasi bakterisida berbahan tembaga sebagai tindakan preventif.",
-    spreadMethod: "Melalui stek terinfeksi, hujan, dan peralatan terkontaminasi",
+    spreadMethod:
+      "Melalui stek terinfeksi, hujan, dan peralatan terkontaminasi",
     damageLevel: "70-100% pada serangan berat",
   },
   {

@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FaUpload,
   FaLeaf,
   FaExclamationTriangle,
   FaCheckCircle,
@@ -174,7 +173,11 @@ function Predict() {
             >
               {/* Image Preview */}
               <div className="preview-image-wrapper">
-                <img src={preview} alt="Preview daun" className="preview-image" />
+                <img
+                  src={preview}
+                  alt="Preview daun"
+                  className="preview-image"
+                />
                 <button
                   className="preview-close"
                   onClick={handleReset}
@@ -184,7 +187,9 @@ function Predict() {
                   <FaTimes />
                 </button>
                 {prediction && (
-                  <div className={`preview-status-badge psb-${getStatusColor(prediction.predicted_class)}`}>
+                  <div
+                    className={`preview-status-badge psb-${getStatusColor(prediction.predicted_class)}`}
+                  >
                     {prediction.predicted_class === "Healthy" ? (
                       <FaCheckCircle />
                     ) : prediction.predicted_class === "Error" ? (
@@ -252,10 +257,14 @@ function Predict() {
                     {/* Confidence */}
                     <div className="result-confidence">
                       <div className="confidence-header">
-                        <span className="confidence-label">Tingkat Keyakinan</span>
+                        <span className="confidence-label">
+                          Tingkat Keyakinan
+                        </span>
                         <span
                           className="confidence-value"
-                          style={{ color: getConfidenceColor(prediction.confidence) }}
+                          style={{
+                            color: getConfidenceColor(prediction.confidence),
+                          }}
                         >
                           {(prediction.confidence * 100).toFixed(2)}%
                         </span>
@@ -280,7 +289,9 @@ function Predict() {
                           <FaLeaf className="rct-icon" />
                           Deskripsi
                         </h4>
-                        <p className="result-card-text">{prediction.description}</p>
+                        <p className="result-card-text">
+                          {prediction.description}
+                        </p>
                       </div>
                     )}
 
@@ -307,26 +318,27 @@ function Predict() {
                     )}
 
                     {/* Treatment */}
-                    {prediction.treatment && prediction.treatment.length > 0 && (
-                      <div className="result-card result-card-success">
-                        <h4 className="result-card-title">
-                          <FaCheckCircle className="rct-icon rct-success" />
-                          Rekomendasi Penanganan
-                        </h4>
-                        <ul className="result-list">
-                          {prediction.treatment.map((t, i) => (
-                            <motion.li
-                              key={i}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.1 }}
-                            >
-                              {t}
-                            </motion.li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {prediction.treatment &&
+                      prediction.treatment.length > 0 && (
+                        <div className="result-card result-card-success">
+                          <h4 className="result-card-title">
+                            <FaCheckCircle className="rct-icon rct-success" />
+                            Rekomendasi Penanganan
+                          </h4>
+                          <ul className="result-list">
+                            {prediction.treatment.map((t, i) => (
+                              <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                              >
+                                {t}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                     {/* All Probabilities */}
                     {prediction.all_probabilities && (

@@ -1,10 +1,11 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
-// eslint-disable-next-line react/prop-types
 export function MainLayout({ children }) {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
       <Header />
       <main style={{ flex: 1 }}>{children}</main>
       <Footer />
