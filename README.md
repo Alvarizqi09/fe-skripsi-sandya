@@ -36,6 +36,15 @@ cd fe-skripsi-sandya
 npm install
 ```
 
+### Konfigurasi Environment Variables (.env)
+
+Buat file baru bernama `.env` di dalam folder root `fe-skripsi` (sejajar dengan `package.json`). Isi file tersebut dengan URL backend API:
+
+```env
+# URL Backend API (sesuaikan jika backend sudah di-deploy)
+VITE_API_URL=http://127.0.0.1:5000
+```
+
 ## Cara menjalankan project
 
 Untuk menjalankan aplikasi dalam mode development:
