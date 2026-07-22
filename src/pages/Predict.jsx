@@ -411,37 +411,58 @@ function Predict() {
                       <p className="unidentified-desc">
                         {prediction.description}
                       </p>
-                      <div className="result-confidence" style={{ marginTop: "1.5rem" }}>
-                        <div className="confidence-header">
-                          <span className="confidence-label">
-                            Confidence Tertinggi
-                          </span>
-                          <span
-                            className="confidence-value"
-                            style={{ color: "var(--amber-500)" }}
-                          >
-                            {(prediction.confidence * 100).toFixed(2)}%
+
+                      {/* Alasan Penolakan */}
+                      {prediction.reject_reasons && prediction.reject_reasons.length > 0 && (
+                        <div className="result-card result-card-warning" style={{ marginTop: "1.25rem", textAlign: "left" }}>
+                          <h4 className="result-card-title">
+                            <FaExclamationTriangle className="rct-icon rct-warning" />
+                            Alasan Tidak Dikenali
+                          </h4>
+                          <ul className="result-list">
+                            {prediction.reject_reasons.map((reason, i) => (
+                              <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.15 }}
+                              >
+                                {reason}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Quick Stats: Green Ratio + Margin */}
+                      <div className="unidentified-stats">
+                        {prediction.green_ratio !== undefined && (
+                          <div className="unidentified-stat">
+                            <span className="ustat-label">Piksel Hijau</span>
+                            <span className={`ustat-value ${prediction.green_ratio >= 0.18 ? "ustat-ok" : "ustat-fail"}`}>
+                              {(prediction.green_ratio * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                        )}
+                        {prediction.margin !== undefined && (
+                          <div className="unidentified-stat">
+                            <span className="ustat-label">Margin Top-1 vs Top-2</span>
+                            <span className={`ustat-value ${prediction.margin >= 0.12 ? "ustat-ok" : "ustat-fail"}`}>
+                              {(prediction.margin * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                        )}
+                        <div className="unidentified-stat">
+                          <span className="ustat-label">Confidence</span>
+                          <span className={`ustat-value ${prediction.confidence >= 0.65 ? "ustat-ok" : "ustat-fail"}`}>
+                            {(prediction.confidence * 100).toFixed(1)}%
                           </span>
                         </div>
-                        <div className="confidence-bar-bg">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${prediction.confidence * 100}%` }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="confidence-bar"
-                            style={{
-                              background: "linear-gradient(90deg, var(--amber-500), var(--red-400))",
-                            }}
-                          />
-                        </div>
-                        <p className="confidence-note">
-                          Confidence di bawah threshold 70% — gambar kemungkinan bukan daun singkong.
-                        </p>
                       </div>
 
                       {/* All Probabilities */}
                       {prediction.all_probabilities && (
-                        <div className="result-card" style={{ marginTop: "1rem" }}>
+                        <div className="result-card" style={{ marginTop: "1rem", textAlign: "left" }}>
                           <h4 className="result-card-title">
                             <FaLeaf className="rct-icon" />
                             Probabilitas Semua Kelas
@@ -475,7 +496,7 @@ function Predict() {
                       )}
 
                       {prediction.treatment && prediction.treatment.length > 0 && (
-                        <div className="result-card result-card-success" style={{ marginTop: "1rem" }}>
+                        <div className="result-card result-card-success" style={{ marginTop: "1rem", textAlign: "left" }}>
                           <h4 className="result-card-title">
                             <FaCheckCircle className="rct-icon rct-success" />
                             Tips
