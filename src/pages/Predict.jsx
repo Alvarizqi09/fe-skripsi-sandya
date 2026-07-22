@@ -434,13 +434,13 @@ function Predict() {
                         </div>
                       )}
 
-                      {/* Quick Stats: Green Ratio + Margin */}
+                      {/* Quick Stats: Plant Color Ratio + Margin + Confidence */}
                       <div className="unidentified-stats">
-                        {prediction.green_ratio !== undefined && (
+                        {prediction.plant_ratio !== undefined && (
                           <div className="unidentified-stat">
-                            <span className="ustat-label">Piksel Hijau</span>
-                            <span className={`ustat-value ${prediction.green_ratio >= 0.18 ? "ustat-ok" : "ustat-fail"}`}>
-                              {(prediction.green_ratio * 100).toFixed(1)}%
+                            <span className="ustat-label">Warna Tanaman</span>
+                            <span className={`ustat-value ${prediction.plant_ratio >= 0.15 ? "ustat-ok" : "ustat-fail"}`}>
+                              {(prediction.plant_ratio * 100).toFixed(1)}%
                             </span>
                           </div>
                         )}
