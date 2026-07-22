@@ -88,6 +88,7 @@ function Predict() {
   const getStatusColor = (predicted) => {
     if (predicted === "Healthy") return "success";
     if (predicted === "Error") return "error";
+    if (predicted === "Unidentified Object") return "unidentified";
     return "warning";
   };
 
@@ -194,6 +195,8 @@ function Predict() {
                       <FaCheckCircle />
                     ) : prediction.predicted_class === "Error" ? (
                       <FaExclamationTriangle />
+                    ) : prediction.predicted_class === "Unidentified Object" ? (
+                      <FaExclamationTriangle />
                     ) : (
                       <FaExclamationTriangle />
                     )}
@@ -247,7 +250,7 @@ function Predict() {
 
               {/* Results */}
               <AnimatePresence>
-                {prediction && prediction.predicted_class !== "Error" && (
+                {prediction && prediction.predicted_class !== "Error" && prediction.predicted_class !== "Unidentified Object" && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -388,6 +391,120 @@ function Predict() {
                         <FaRedo />
                         Coba Gambar Lain
                       </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Unidentified Object State */}
+                {prediction && prediction.predicted_class === "Unidentified Object" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="result-section"
+                  >
+                    <div className="unidentified-card">
+                      <div className="unidentified-icon">
+                        <FaExclamationTriangle />
+                      </div>
+                      <h3 className="unidentified-title">Objek Tidak Dikenali</h3>
+                      <p className="unidentified-desc">
+                        {prediction.description}
+                      </p>
+                      <div className="result-confidence" style={{ marginTop: "1.5rem" }}>
+                        <div className="confidence-header">
+                          <span className="confidence-label">
+                            Confidence Tertinggi
+                          </span>
+                          <span
+                            className="confidence-value"
+                            style={{ color: "var(--amber-500)" }}
+                          >
+                            {(prediction.confidence * 100).toFixed(2)}%
+                          </span>
+                        </div>
+                        <div className="confidence-bar-bg">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${prediction.confidence * 100}%` }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="confidence-bar"
+                            style={{
+                              background: "linear-gradient(90deg, var(--amber-500), var(--red-400))",
+                            }}
+                          />
+                        </div>
+                        <p className="confidence-note">
+                          Confidence di bawah threshold 70% — gambar kemungkinan bukan daun singkong.
+                        </p>
+                      </div>
+
+                      {/* All Probabilities */}
+                      {prediction.all_probabilities && (
+                        <div className="result-card" style={{ marginTop: "1rem" }}>
+                          <h4 className="result-card-title">
+                            <FaLeaf className="rct-icon" />
+                            Probabilitas Semua Kelas
+                          </h4>
+                          <div className="prob-list">
+                            {Object.entries(prediction.all_probabilities)
+                              .sort(([, a], [, b]) => b - a)
+                              .map(([name, prob]) => (
+                                <div key={name} className="prob-item">
+                                  <div className="prob-info">
+                                    <span className="prob-name">{name}</span>
+                                    <span className="prob-value">
+                                      {(prob * 100).toFixed(2)}%
+                                    </span>
+                                  </div>
+                                  <div className="prob-bar-bg">
+                                    <motion.div
+                                      initial={{ width: 0 }}
+                                      animate={{ width: `${prob * 100}%` }}
+                                      transition={{ duration: 0.8 }}
+                                      className="prob-bar"
+                                      style={{
+                                        background: "var(--gray-300)",
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {prediction.treatment && prediction.treatment.length > 0 && (
+                        <div className="result-card result-card-success" style={{ marginTop: "1rem" }}>
+                          <h4 className="result-card-title">
+                            <FaCheckCircle className="rct-icon rct-success" />
+                            Tips
+                          </h4>
+                          <ul className="result-list">
+                            {prediction.treatment.map((t, i) => (
+                              <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                              >
+                                {t}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div className="result-actions" style={{ marginTop: "1.5rem" }}>
+                        <button
+                          className="btn btn-primary"
+                          onClick={handleReset}
+                          id="try-again-unidentified-btn"
+                        >
+                          <FaRedo />
+                          Coba Gambar Lain
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 )}

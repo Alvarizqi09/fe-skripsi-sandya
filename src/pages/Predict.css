@@ -192,6 +192,11 @@
   color: white;
 }
 
+.psb-unidentified {
+  background: rgba(168, 85, 247, 0.9);
+  color: white;
+}
+
 /* Actions */
 .predict-actions {
   display: flex;
@@ -404,6 +409,39 @@
 .result-actions {
   text-align: center;
   padding-top: 0.5rem;
+}
+
+/* Unidentified Object */
+.unidentified-card {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.unidentified-icon {
+  font-size: 3rem;
+  color: var(--amber-400);
+  margin-bottom: 1rem;
+}
+
+.unidentified-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 0.75rem;
+}
+
+.unidentified-desc {
+  color: var(--gray-600);
+  max-width: 450px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.confidence-note {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+  text-align: left;
 }
 
 /* Error */
